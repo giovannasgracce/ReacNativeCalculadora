@@ -7,51 +7,83 @@ export default function App(){
     /*Função*/
     const [primeiroNumero ,setPrimeiroNumero] = useState(0); 
     const [segundoNumero ,setSegundoNumero] = useState(0);/*valor inicial da constante é oq esta dentro do parenteses*/ 
-    const [resultado ,setResultado] = useState(0);/*altera o estado de algo,da constante ou da variavwel*/ 
+    const [resultado ,setResultado] = useState(0);/*altera o estado de algo,da constante ou da variavel-- set*/ 
    
-   /*dentro do return,olhamos tudo*/
+    function somar(){
+        setResultado(parseFloat(primeiroNumero) + parseFloat(segundoNumero));
+        return setResultado;
+    }/*parseFloat é para modificar o valor da variavel,por ser fracamente típada ela precisa converter a vaiavel para número*/ 
+
+    function subtrair(){
+        setResultado(parseFloat(primeiroNumero) - parseFloat(segundoNumero));
+        return setResultado;
+    }
+
+    function multiplicar(){
+        setResultado(parseFloat(primeiroNumero) * parseFloat(segundoNumero));
+        return setResultado;
+    }
+
+    function dividir(){
+        if(parseFloat(segundoNumero) <= 0){
+        setResultado("Impossivel dividir por 0");
+        }else{
+            setResultado(parseFloat(primeiroNumero) / parseFloat(segundoNumero));
+        }
+        return setResultado;
+    }
+
+    function limpar(){
+       setPrimeiroNumero(0);
+       setSegundoNumero(0);
+       setResultado(0);
+    }
+    
+    /*dentro do return,olhamos tudo*/
     return(
       
         <View style={styles.tela}>
             <Text style={styles.tituloPrograma}>Calculadora</Text>
 
             <View style={styles.primeiroCampo}>
-                <TextInput style={styles.input}  placeholder="Informe um número:"/>
+                <TextInput style={styles.input} value={primeiroNumero} /*definindo a varivel para ir no primeiro número,com o que fo preechido*/ onChangeText={novoNumero => setPrimeiroNumero(novoNumero)}/*pega o que foi inseido,tipo uma variavle que guarda,a seta é para usar a varivel dentro do set(novoNumero)*/ placeholder="Informe um número:"/>
             </View>
 
             <View style={styles.SegundoCampo}>
-                <TextInput style={styles.input} placeholder="Informe outro número:"/>
-            </View>
-
-            <View style={styles.areaBotoes}>
-                <TouchableOpacity style={styles.botao}>
-                    <Text style={styles.input}>Somar</Text>
-                </TouchableOpacity>
-           
-                <TouchableOpacity style={styles.botao}>
-                    <Text style={styles.input}>Subtrair</Text>
-                </TouchableOpacity>
-            </View>
- 
-            <View style={styles.areaBotoes}>
-                <TouchableOpacity style={styles.botao}>
-                    <Text style={styles.input}>Multiplicar</Text>
-                </TouchableOpacity>
-       
-                <TouchableOpacity style={styles.botao}>
-                    <Text style={styles.input}>Dividir</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.areaBotoes}>
-            <TouchableOpacity style={styles.botao}>
-                    <Text style={styles.input}>Limpar</Text>
-                </TouchableOpacity>
+                <TextInput style={styles.input} value={segundoNumero} onChangeText={novoNumero => setSegundoNumero(novoNumero)} placeholder="Informe outro número:"/>{/*ele pega o número o textInput*/}
             </View>
 
             <View style={styles.areaResultado}>
                 <Text style={styles.textoResultado}>{resultado}</Text> {/*Para mostrar o resultado*/}
             </View>
+
+            <View style={styles.areaBotoes}>
+                <TouchableOpacity style={styles.botao} onPress={somar}>
+                    <Text style={styles.input}>Somar</Text>
+                </TouchableOpacity>
+           
+                <TouchableOpacity style={styles.botao} onPress={subtrair}>
+                    <Text style={styles.input}>Subtrair</Text>
+                </TouchableOpacity>
+            </View>
+ 
+            <View style={styles.areaBotoes}>
+                <TouchableOpacity style={styles.botao} onPress={multiplicar}>
+                    <Text style={styles.input}>Multiplicar</Text>
+                </TouchableOpacity>
+       
+                <TouchableOpacity style={styles.botao} onPress={dividir}>
+                    <Text style={styles.input}>Dividir</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.areaLimpar}>
+            <TouchableOpacity style={styles.botao} onPress={limpar}>
+                    <Text style={styles.input}>Limpar</Text>
+                </TouchableOpacity>
+            </View>
+
+           
         </View>
 
     );
@@ -125,6 +157,11 @@ const styles = StyleSheet.create({
         fintSize: 30,
         textAlign: "center",
       
+    },
+
+    areaLimpar:{
+        marginTop: 10,
+        width: 788,
     },
 
 });
